@@ -1,0 +1,23 @@
+package com.example.demo.repositories;
+
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import model.Korisnik;
+
+/*
+ * ovo sada predstavlja citavu bazu i tako treba da se posmatra
+ */
+
+public interface KorisnikRepository extends JpaRepository<Korisnik, Integer>{
+	/*
+	 *odredjene metode su automatski implementirane poput metode 
+	 * save(), tako da za nju ne moramo nista da pisemo
+	 */
+	//SELECT * FROM Korisnik WHERE korisnickoIme = 'jovan';
+	@Query("select k from Korisnik k where k.korisnickoIme = :korisnickoIme")
+	Korisnik findKorisnikbyKorisnickoIme(@Param("korisnickoIme")String korisnickoIme);
+	
+	Korisnik findByKorisnickoIme(String korisnickoIme);}

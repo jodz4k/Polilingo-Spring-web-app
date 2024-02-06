@@ -1,0 +1,22 @@
+package com.example.demo.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.demo.services.RecService;
+
+@Controller
+@RequestMapping(value = "/rec")
+public class RecController {
+	
+	@Autowired
+	RecService rs;
+	
+	@PostMapping("/deleteRec")
+	public String deleteRec(String naziv) {
+		rs.deleteRec(rs.findRecByNaziv(naziv));
+		return "admin";
+	}
+}

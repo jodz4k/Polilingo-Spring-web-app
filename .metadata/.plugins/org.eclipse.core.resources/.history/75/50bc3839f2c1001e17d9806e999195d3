@@ -1,0 +1,124 @@
+package model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the korisnik database table.
+ * 
+ */
+@Entity
+@NamedQuery(name="Korisnik.findAll", query="SELECT k FROM Korisnik k")
+public class Korisnik implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int idKorisnik;
+
+	private String korisnickoIme;
+
+	private String mail;
+
+	private String password;
+
+	private String tipKorisnika;
+
+	//bi-directional many-to-one association to Administrator
+	@OneToMany(mappedBy="korisnik")
+	private List<Administrator> administrators;
+
+	//bi-directional many-to-one association to Clan
+	@OneToMany(mappedBy="korisnik")
+	private List<Clan> clans;
+
+	public Korisnik() {
+	}
+
+	public int getIdKorisnik() {
+		return this.idKorisnik;
+	}
+
+	public void setIdKorisnik(int idKorisnik) {
+		this.idKorisnik = idKorisnik;
+	}
+
+	public String getKorisnickoIme() {
+		return this.korisnickoIme;
+	}
+
+	public void setKorisnickoIme(String korisnickoIme) {
+		this.korisnickoIme = korisnickoIme;
+	}
+
+	public String getMail() {
+		return this.mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public String getPassword() {
+		return this.password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getTipKorisnika() {
+		return this.tipKorisnika;
+	}
+
+	public void setTipKorisnika(String tipKorisnika) {
+		this.tipKorisnika = tipKorisnika;
+	}
+
+	public List<Administrator> getAdministrators() {
+		return this.administrators;
+	}
+
+	public void setAdministrators(List<Administrator> administrators) {
+		this.administrators = administrators;
+	}
+
+	public Administrator addAdministrator(Administrator administrator) {
+		getAdministrators().add(administrator);
+		administrator.setKorisnik(this);
+
+		return administrator;
+	}
+
+	public Administrator removeAdministrator(Administrator administrator) {
+		getAdministrators().remove(administrator);
+		administrator.setKorisnik(null);
+
+		return administrator;
+	}
+
+	public List<Clan> getClans() {
+		return this.clans;
+	}
+
+	public void setClans(List<Clan> clans) {
+		this.clans = clans;
+	}
+
+	public Clan addClan(Clan clan) {
+		getClans().add(clan);
+		clan.setKorisnik(this);
+
+		return clan;
+	}
+
+	public Clan removeClan(Clan clan) {
+		getClans().remove(clan);
+		clan.setKorisnik(null);
+
+		return clan;
+	}
+
+}

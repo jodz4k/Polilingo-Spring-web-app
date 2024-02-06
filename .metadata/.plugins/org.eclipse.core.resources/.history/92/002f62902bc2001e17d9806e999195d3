@@ -1,0 +1,56 @@
+package model;
+
+import java.io.Serializable;
+import jakarta.persistence.*;
+
+/**
+ * The primary key class for the clan_ima_cilj database table.
+ * 
+ */
+@Embeddable
+public class ClanImaCiljPK implements Serializable {
+	//default serial version id, required for serializable classes.
+	private static final long serialVersionUID = 1L;
+
+	private int idClan_ima_cilj;
+
+	@Column(insertable=false, updatable=false)
+	private int cilj_idCilj;
+
+	public ClanImaCiljPK() {
+	}
+	public int getIdClan_ima_cilj() {
+		return this.idClan_ima_cilj;
+	}
+	public void setIdClan_ima_cilj(int idClan_ima_cilj) {
+		this.idClan_ima_cilj = idClan_ima_cilj;
+	}
+	public int getCilj_idCilj() {
+		return this.cilj_idCilj;
+	}
+	public void setCilj_idCilj(int cilj_idCilj) {
+		this.cilj_idCilj = cilj_idCilj;
+	}
+
+	public boolean equals(Object other) {
+		if (this == other) {
+			return true;
+		}
+		if (!(other instanceof ClanImaCiljPK)) {
+			return false;
+		}
+		ClanImaCiljPK castOther = (ClanImaCiljPK)other;
+		return 
+			(this.idClan_ima_cilj == castOther.idClan_ima_cilj)
+			&& (this.cilj_idCilj == castOther.cilj_idCilj);
+	}
+
+	public int hashCode() {
+		final int prime = 31;
+		int hash = 17;
+		hash = hash * prime + this.idClan_ima_cilj;
+		hash = hash * prime + this.cilj_idCilj;
+		
+		return hash;
+	}
+}

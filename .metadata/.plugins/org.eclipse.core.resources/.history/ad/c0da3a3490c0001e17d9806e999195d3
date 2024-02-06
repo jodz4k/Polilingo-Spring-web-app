@@ -1,0 +1,158 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profilna Stranica</title>
+<style>
+body {
+	background-color: #f0f8f7; /* svetlozelena boja pozadine */
+	font-family: Arial, sans-serif;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+h1 {
+	color: #4caf50;
+	margin-bottom: 20px;
+}
+
+.profile-container {
+	background-color: #ffffff; /* bela boja pozadine za profilnu sekciju */
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* senka za efekat pop-up-a */
+	width: 80%; /* prilagodi širinu profila prema potrebama */
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+#logo {
+	width: 200px; /* prilagodi veličinu loga prema potrebama */
+	height: auto;
+	opacity: 0.8;
+	border-radius: 10px;
+}
+
+.info-section {
+	width: 100%;
+	margin-top: 20px;
+}
+
+.search-bar {
+	margin-top: 20px;
+	display: flex;
+	align-items: center;
+}
+
+#search-input {
+	flex-grow: 1;
+	padding: 10px;
+	border: 1px solid #ccc; /* siva boja granice input polja */
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+#search-button {
+	background-color: #4caf50; /* zelena boja za dugme */
+	color: white;
+	padding: 10px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+	margin-left: 10px;
+	transition: background-color 0.3s;
+}
+
+.action-buttons {
+	margin-top: 20px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-end;
+}
+
+.action-button {
+	background-color: #4caf50; /* zelena boja za dugme */
+	color: white;
+	padding: 15px 30px;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	font-size: 16px;
+	margin-left: 10px;
+	transition: background-color 0.3s;
+}
+
+#countdown-section {
+	margin-top: 20px;
+}
+
+#word-count-section {
+	margin-top: 20px;
+}
+</style>
+</head>
+<body>
+	<h1>
+		Dobrodosli,
+		<c:out value="${korisnickoIme}" />
+	</h1>
+
+	<div class="profile-container">
+		<div class="logo-section">
+			<!-- Ovde dodaj svoj logo -->
+			<img id="logo"
+				src="https://w1.pngwing.com/pngs/9/306/png-transparent-green-leaf-android-game-fourleaf-clover-superenalotto-luck-random-number-generation-shamrock.png"
+				alt="Logo">
+		</div>
+
+		<div class="info-section">
+			<label for="username">Polilinger: </label> 
+			<p>@${korisnickoIme}</p>
+
+		  	<label for="friends">Prijatelji:</label> 
+			<p>${brPrijatelja}</p>  
+
+			<label for="languages">Jezici:</label>
+			<p>${ispisaniJeziciKojeUci}</p>
+
+			<label for="completed-goals">Broj ispunjenih ciljeva:</label>
+			<p>${ispunjenihCiljeva}</p>
+		</div>
+	</div>
+
+
+	<div class="search-bar">
+		<input type="text" id="search-input"
+			placeholder="Pretrazi prijatelje...">
+		<button id="search-button">Pretrazi</button>
+	</div>
+
+	<div class="action-buttons">
+		<a href="/Polilingo/jezik/ispisiJezikeZaClanove" class="action-button">Uci</a>
+		<button class="action-button">Pregled jezika</button>
+	</div>
+
+	<div id="countdown-section">
+		<!-- Countdown do isteka cilja -->
+	</div>
+
+	<div id="word-count-section">
+		<!-- Koliko je reči nauceno -->
+	</div>
+</body>
+</html>

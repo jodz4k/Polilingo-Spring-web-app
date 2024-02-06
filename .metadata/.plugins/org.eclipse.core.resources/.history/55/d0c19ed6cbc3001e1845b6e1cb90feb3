@@ -1,0 +1,104 @@
+package model;
+
+import java.io.Serializable;
+import jakarta.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the jezik database table.
+ * 
+ */
+@Entity
+@NamedQuery(name="Jezik.findAll", query="SELECT j FROM Jezik j")
+public class Jezik implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int idJezik;
+
+	private String naziv;
+
+	private String nivo;
+
+	//bi-directional many-to-one association to ClanUciJezik
+	@OneToMany(mappedBy="jezik")
+	private List<ClanUciJezik> clanUciJeziks;
+
+	//bi-directional many-to-one association to Rec
+	@OneToMany(mappedBy="jezik")
+	private List<Rec> recs;
+
+	public Jezik() {
+	}
+
+	public int getIdJezik() {
+		return this.idJezik;
+	}
+
+	public void setIdJezik(int idJezik) {
+		this.idJezik = idJezik;
+	}
+
+	public String getNaziv() {
+		return this.naziv;
+	}
+
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
+	}
+
+	public String getNivo() {
+		return this.nivo;
+	}
+
+	public void setNivo(String nivo) {
+		this.nivo = nivo;
+	}
+
+	public List<ClanUciJezik> getClanUciJeziks() {
+		return this.clanUciJeziks;
+	}
+
+	public void setClanUciJeziks(List<ClanUciJezik> clanUciJeziks) {
+		this.clanUciJeziks = clanUciJeziks;
+	}
+
+	public ClanUciJezik addClanUciJezik(ClanUciJezik clanUciJezik) {
+		getClanUciJeziks().add(clanUciJezik);
+		clanUciJezik.setJezik(this);
+
+		return clanUciJezik;
+	}
+
+	public ClanUciJezik removeClanUciJezik(ClanUciJezik clanUciJezik) {
+		getClanUciJeziks().remove(clanUciJezik);
+		clanUciJezik.setJezik(null);
+
+		return clanUciJezik;
+	}
+
+	public List<Rec> getRecs() {
+		return this.recs;
+	}
+
+	public void setRecs(List<Rec> recs) {
+		this.recs = recs;
+	}
+
+	public Rec addRec(Rec rec) {
+		getRecs().add(rec);
+		rec.setJezik(this);
+
+		return rec;
+	}
+
+	public Rec removeRec(Rec rec) {
+		getRecs().remove(rec);
+		rec.setJezik(null);
+
+		return rec;
+	}
+
+}

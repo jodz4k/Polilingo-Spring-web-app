@@ -1,0 +1,136 @@
+package model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the rec database table.
+ * 
+ */
+@Entity
+@NamedQuery(name="Rec.findAll", query="SELECT r FROM Rec r")
+public class Rec implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int idRec;
+
+	private String kontekst;
+
+	private String naziv;
+
+	private String opis;
+
+	private String tezina;
+
+	//bi-directional many-to-one association to ClanImaCiljKojiPosedujeReci
+	@OneToMany(mappedBy="rec1")
+	private List<ClanImaCiljKojiPosedujeReci> clanImaCiljKojiPosedujeRecis1;
+
+	//bi-directional many-to-one association to ClanImaCiljKojiPosedujeReci
+	@OneToMany(mappedBy="rec2")
+	private List<ClanImaCiljKojiPosedujeReci> clanImaCiljKojiPosedujeRecis2;
+
+	//bi-directional many-to-one association to Jezik
+	@ManyToOne
+	private Jezik jezik;
+
+	public Rec() {
+	}
+
+	public int getIdRec() {
+		return this.idRec;
+	}
+
+	public void setIdRec(int idRec) {
+		this.idRec = idRec;
+	}
+
+	public String getKontekst() {
+		return this.kontekst;
+	}
+
+	public void setKontekst(String kontekst) {
+		this.kontekst = kontekst;
+	}
+
+	public String getNaziv() {
+		return this.naziv;
+	}
+
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
+	}
+
+	public String getOpis() {
+		return this.opis;
+	}
+
+	public void setOpis(String opis) {
+		this.opis = opis;
+	}
+
+	public String getTezina() {
+		return this.tezina;
+	}
+
+	public void setTezina(String tezina) {
+		this.tezina = tezina;
+	}
+
+	public List<ClanImaCiljKojiPosedujeReci> getClanImaCiljKojiPosedujeRecis1() {
+		return this.clanImaCiljKojiPosedujeRecis1;
+	}
+
+	public void setClanImaCiljKojiPosedujeRecis1(List<ClanImaCiljKojiPosedujeReci> clanImaCiljKojiPosedujeRecis1) {
+		this.clanImaCiljKojiPosedujeRecis1 = clanImaCiljKojiPosedujeRecis1;
+	}
+
+	public ClanImaCiljKojiPosedujeReci addClanImaCiljKojiPosedujeRecis1(ClanImaCiljKojiPosedujeReci clanImaCiljKojiPosedujeRecis1) {
+		getClanImaCiljKojiPosedujeRecis1().add(clanImaCiljKojiPosedujeRecis1);
+		clanImaCiljKojiPosedujeRecis1.setRec1(this);
+
+		return clanImaCiljKojiPosedujeRecis1;
+	}
+
+	public ClanImaCiljKojiPosedujeReci removeClanImaCiljKojiPosedujeRecis1(ClanImaCiljKojiPosedujeReci clanImaCiljKojiPosedujeRecis1) {
+		getClanImaCiljKojiPosedujeRecis1().remove(clanImaCiljKojiPosedujeRecis1);
+		clanImaCiljKojiPosedujeRecis1.setRec1(null);
+
+		return clanImaCiljKojiPosedujeRecis1;
+	}
+
+	public List<ClanImaCiljKojiPosedujeReci> getClanImaCiljKojiPosedujeRecis2() {
+		return this.clanImaCiljKojiPosedujeRecis2;
+	}
+
+	public void setClanImaCiljKojiPosedujeRecis2(List<ClanImaCiljKojiPosedujeReci> clanImaCiljKojiPosedujeRecis2) {
+		this.clanImaCiljKojiPosedujeRecis2 = clanImaCiljKojiPosedujeRecis2;
+	}
+
+	public ClanImaCiljKojiPosedujeReci addClanImaCiljKojiPosedujeRecis2(ClanImaCiljKojiPosedujeReci clanImaCiljKojiPosedujeRecis2) {
+		getClanImaCiljKojiPosedujeRecis2().add(clanImaCiljKojiPosedujeRecis2);
+		clanImaCiljKojiPosedujeRecis2.setRec2(this);
+
+		return clanImaCiljKojiPosedujeRecis2;
+	}
+
+	public ClanImaCiljKojiPosedujeReci removeClanImaCiljKojiPosedujeRecis2(ClanImaCiljKojiPosedujeReci clanImaCiljKojiPosedujeRecis2) {
+		getClanImaCiljKojiPosedujeRecis2().remove(clanImaCiljKojiPosedujeRecis2);
+		clanImaCiljKojiPosedujeRecis2.setRec2(null);
+
+		return clanImaCiljKojiPosedujeRecis2;
+	}
+
+	public Jezik getJezik() {
+		return this.jezik;
+	}
+
+	public void setJezik(Jezik jezik) {
+		this.jezik = jezik;
+	}
+
+}

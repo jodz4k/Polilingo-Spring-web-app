@@ -1,0 +1,101 @@
+package model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.Date;
+
+
+/**
+ * The persistent class for the clan_ima_cilj database table.
+ * 
+ */
+@Entity
+@Table(name="clan_ima_cilj")
+@NamedQuery(name="ClanImaCilj.findAll", query="SELECT c FROM ClanImaCilj c")
+public class ClanImaCilj implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
+	private ClanImaCiljPK id;
+
+	private byte jeIspunjen;
+
+	@Temporal(TemporalType.DATE)
+	private Date pocetak;
+
+	@Temporal(TemporalType.DATE)
+	private Date zavrsetak;
+
+	//bi-directional many-to-one association to Cilj
+	@ManyToOne
+	private Cilj cilj;
+
+	//bi-directional many-to-one association to Clan
+	@ManyToOne
+	private Clan clan;
+
+	//bi-directional many-to-one association to ClanImaCiljKojiPosedujeReci
+	@ManyToOne
+	@JoinColumn(name="Cilj_idCilj", referencedColumnName="clan_ima_cilj_idClan_ima_cilj")
+	private ClanImaCiljKojiPosedujeReci clanImaCiljKojiPosedujeReci;
+
+	public ClanImaCilj() {
+	}
+
+	public ClanImaCiljPK getId() {
+		return this.id;
+	}
+
+	public void setId(ClanImaCiljPK id) {
+		this.id = id;
+	}
+
+	public byte getJeIspunjen() {
+		return this.jeIspunjen;
+	}
+
+	public void setJeIspunjen(byte jeIspunjen) {
+		this.jeIspunjen = jeIspunjen;
+	}
+
+	public Date getPocetak() {
+		return this.pocetak;
+	}
+
+	public void setPocetak(Date pocetak) {
+		this.pocetak = pocetak;
+	}
+
+	public Date getZavrsetak() {
+		return this.zavrsetak;
+	}
+
+	public void setZavrsetak(Date zavrsetak) {
+		this.zavrsetak = zavrsetak;
+	}
+
+	public Cilj getCilj() {
+		return this.cilj;
+	}
+
+	public void setCilj(Cilj cilj) {
+		this.cilj = cilj;
+	}
+
+	public Clan getClan() {
+		return this.clan;
+	}
+
+	public void setClan(Clan clan) {
+		this.clan = clan;
+	}
+
+	public ClanImaCiljKojiPosedujeReci getClanImaCiljKojiPosedujeReci() {
+		return this.clanImaCiljKojiPosedujeReci;
+	}
+
+	public void setClanImaCiljKojiPosedujeReci(ClanImaCiljKojiPosedujeReci clanImaCiljKojiPosedujeReci) {
+		this.clanImaCiljKojiPosedujeReci = clanImaCiljKojiPosedujeReci;
+	}
+
+}

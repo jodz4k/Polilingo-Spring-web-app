@@ -1,0 +1,141 @@
+package model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
+
+
+/**
+ * The persistent class for the clan_ima_cilj database table.
+ * 
+ */
+@Entity
+@Table(name="clan_ima_cilj")
+@NamedQuery(name="ClanImaCilj.findAll", query="SELECT c FROM ClanImaCilj c")
+public class ClanImaCilj implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
+	private ClanImaCiljPK id;
+
+	private byte jeIspunjen;
+
+	@Temporal(TemporalType.DATE)
+	private Date pocetak;
+
+	@Temporal(TemporalType.DATE)
+	private Date zavrsetak;
+
+	//bi-directional many-to-one association to Cilj
+	@ManyToOne
+	private Cilj cilj;
+
+	//bi-directional many-to-one association to Clan
+	@ManyToOne
+	private Clan clan;
+
+	//bi-directional many-to-one association to ClanImaCiljKojiPosedujeReci
+	@OneToMany(mappedBy="clanImaCilj1")
+	private List<ClanImaCiljKojiPosedujeReci> clanImaCiljKojiPosedujeRecis1;
+
+	//bi-directional many-to-one association to ClanImaCiljKojiPosedujeReci
+	@OneToMany(mappedBy="clanImaCilj2")
+	private List<ClanImaCiljKojiPosedujeReci> clanImaCiljKojiPosedujeRecis2;
+
+	public ClanImaCilj() {
+	}
+
+	public ClanImaCiljPK getId() {
+		return this.id;
+	}
+
+	public void setId(ClanImaCiljPK id) {
+		this.id = id;
+	}
+
+	public byte getJeIspunjen() {
+		return this.jeIspunjen;
+	}
+
+	public void setJeIspunjen(byte jeIspunjen) {
+		this.jeIspunjen = jeIspunjen;
+	}
+
+	public Date getPocetak() {
+		return this.pocetak;
+	}
+
+	public void setPocetak(Date pocetak) {
+		this.pocetak = pocetak;
+	}
+
+	public Date getZavrsetak() {
+		return this.zavrsetak;
+	}
+
+	public void setZavrsetak(Date zavrsetak) {
+		this.zavrsetak = zavrsetak;
+	}
+
+	public Cilj getCilj() {
+		return this.cilj;
+	}
+
+	public void setCilj(Cilj cilj) {
+		this.cilj = cilj;
+	}
+
+	public Clan getClan() {
+		return this.clan;
+	}
+
+	public void setClan(Clan clan) {
+		this.clan = clan;
+	}
+
+	public List<ClanImaCiljKojiPosedujeReci> getClanImaCiljKojiPosedujeRecis1() {
+		return this.clanImaCiljKojiPosedujeRecis1;
+	}
+
+	public void setClanImaCiljKojiPosedujeRecis1(List<ClanImaCiljKojiPosedujeReci> clanImaCiljKojiPosedujeRecis1) {
+		this.clanImaCiljKojiPosedujeRecis1 = clanImaCiljKojiPosedujeRecis1;
+	}
+
+	public ClanImaCiljKojiPosedujeReci addClanImaCiljKojiPosedujeRecis1(ClanImaCiljKojiPosedujeReci clanImaCiljKojiPosedujeRecis1) {
+		getClanImaCiljKojiPosedujeRecis1().add(clanImaCiljKojiPosedujeRecis1);
+		clanImaCiljKojiPosedujeRecis1.setClanImaCilj1(this);
+
+		return clanImaCiljKojiPosedujeRecis1;
+	}
+
+	public ClanImaCiljKojiPosedujeReci removeClanImaCiljKojiPosedujeRecis1(ClanImaCiljKojiPosedujeReci clanImaCiljKojiPosedujeRecis1) {
+		getClanImaCiljKojiPosedujeRecis1().remove(clanImaCiljKojiPosedujeRecis1);
+		clanImaCiljKojiPosedujeRecis1.setClanImaCilj1(null);
+
+		return clanImaCiljKojiPosedujeRecis1;
+	}
+
+	public List<ClanImaCiljKojiPosedujeReci> getClanImaCiljKojiPosedujeRecis2() {
+		return this.clanImaCiljKojiPosedujeRecis2;
+	}
+
+	public void setClanImaCiljKojiPosedujeRecis2(List<ClanImaCiljKojiPosedujeReci> clanImaCiljKojiPosedujeRecis2) {
+		this.clanImaCiljKojiPosedujeRecis2 = clanImaCiljKojiPosedujeRecis2;
+	}
+
+	public ClanImaCiljKojiPosedujeReci addClanImaCiljKojiPosedujeRecis2(ClanImaCiljKojiPosedujeReci clanImaCiljKojiPosedujeRecis2) {
+		getClanImaCiljKojiPosedujeRecis2().add(clanImaCiljKojiPosedujeRecis2);
+		clanImaCiljKojiPosedujeRecis2.setClanImaCilj2(this);
+
+		return clanImaCiljKojiPosedujeRecis2;
+	}
+
+	public ClanImaCiljKojiPosedujeReci removeClanImaCiljKojiPosedujeRecis2(ClanImaCiljKojiPosedujeReci clanImaCiljKojiPosedujeRecis2) {
+		getClanImaCiljKojiPosedujeRecis2().remove(clanImaCiljKojiPosedujeRecis2);
+		clanImaCiljKojiPosedujeRecis2.setClanImaCilj2(null);
+
+		return clanImaCiljKojiPosedujeRecis2;
+	}
+
+}

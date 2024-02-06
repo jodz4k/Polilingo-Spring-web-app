@@ -1,0 +1,33 @@
+package com.example.demo.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.repositories.CiljRepository;
+
+import model.Cilj;
+
+@Service
+public class CiljService {
+
+	@Autowired
+	CiljRepository cr;
+
+	public List<Cilj> getCiljevi() {
+		return cr.findAll();
+	}
+
+	public void saveCilj(Cilj cilj) {
+		cr.save(cilj);
+	}
+
+	public void deleteCilj(Cilj cilj) {
+		cr.delete(cilj);
+	}
+
+	public Cilj findCiljByNaziv(String naziv) {
+		return cr.findByNaziv(naziv);
+	}
+}

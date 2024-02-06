@@ -1,0 +1,26 @@
+package com.example.demo.repositories;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import model.Jezik;
+
+@Repository
+public interface JezikRepository extends JpaRepository<Jezik, Integer> {
+	
+	Jezik findOneByIdJezik(int jezik_id);
+	
+	@Query("SELECT COUNT(cic) FROM ClanImaCilj cic " +
+		       "JOIN Clan c ON cic.clan.idClan = c.idClan " +
+		       "JOIN Korisnik k ON c.korisnik.idKorisnik = k.idKorisnik " +
+		       "WHERE k.idKorisnik = :korisnikId AND cic.jeIspunjen = :jeIspunjenValue")
+		int brojIspunjenihCiljevaZaKorisnika(@Param("korisnikId") int korisnikId, @Param("jeIspunjenValue") int jeIspunjenValue);
+
+
+	
+	
+}

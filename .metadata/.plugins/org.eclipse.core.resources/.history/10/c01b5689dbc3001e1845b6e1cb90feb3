@@ -1,0 +1,183 @@
+package com.example.demo.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.example.demo.services.ClanImaCiljService;
+import com.example.demo.services.ClanService;
+import com.example.demo.services.ClanUciJezikService;
+import com.example.demo.services.JezikService;
+import com.example.demo.services.KorisnikService;
+import com.example.demo.services.PrijateljiService;
+import com.example.demo.services.RecService;
+
+import jakarta.servlet.http.HttpSession;
+import model.Clan;
+import model.ClanUciJezik;
+import model.ClanUciJezikPK;
+import model.Jezik;
+import model.Korisnik;
+
+@Controller
+@RequestMapping(value = "/clan")
+public class ClanController {
+
+	@Autowired
+	private KorisnikService korisnikService;
+
+	@Autowired
+	private PrijateljiService prijateljiService;
+
+	@Autowired
+	private JezikService jezikService;
+
+	@Autowired
+	private ClanImaCiljService clanImaCiljService;
+
+	@Autowired
+	private ClanService clanService;
+
+	@Autowired
+	private ClanUciJezikService clanUciJezikService;
+
+	@Autowired
+	private RecService recService;
+
+	@GetMapping("/profilnaStranica")
+	public String prikaziProfilnuStranicu(HttpSession session, Model model) {
+		String korisnickoIme = (String) session.getAttribute("korisnickoIme");
+
+		// provera ispisa
+		System.out.println(korisnickoIme);
+		if (korisnickoIme != null) {
+			Korisnik korisnik = korisnikService.findKorisnik(korisnickoIme);
+
+			model.addAttribute("korisnickoIme", korisnik.getKorisnickoIme());
+			model.addAttribute("brPrijatelja", prijateljiService.brojPrijateljaZaKorisnika(korisnik.getIdKorisnik()));
+			model.addAttribute("ispisaniJeziciKojeUci", jezikService.getJezikeKorisnika(korisnik.getIdKorisnik()));
+			model.addAttribute("ispunjenihCiljeva", clanImaCiljService.getBrojClanImaCilj(korisnik.getIdKorisnik()));
+			System.out.println(4);
+			return "clan";
+		} else {
+			return "login";
+		}
+	}
+
+	@PostMapping("/saveJezik")
+	public String saveJezik(Jezik jezik, HttpSession session) {
+		String korisnickoIme = (String) session.getAttribute("korisnickoIme");
+
+		// Pronalaženje objekta Clan
+		Clan clan = clanService.findByKorisnickoIme(korisnickoIme);
+
+		System.out.println(clan);
+		if (clan == null) {
+			return "redirect:/error";
+		}
+
+		// Pronalaženje objekta Jezik
+		Jezik pronadjeniJezik = jezikService.findByNazivAndNivo(jezik.getNaziv(), jezik.getNivo());
+		System.out.println(pronadjeniJezik);
+		if (pronadjeniJezik == null) {
+			return "redirect:/error";
+		}
+
+		// Inicijalizacija objekta ClanUciJezikPK sa odgovarajućim vrednostima
+		ClanUciJezikPK kljucPK = new ClanUciJezikPK();
+		// kljucPK.setClan_idClan(clan.getIdClan());
+		kljucPK.setJezik_idJezik(pronadjeniJezik.getIdJezik());
+
+		// Inicijalizacija objekta ClanUciJezik sa odgovarajućim vrednostima
+		ClanUciJezik clanUciJezik = new ClanUciJezik();
+		// clanUciJezik.setClan(clan);
+		// clanUciJezik.setJezik(pronadjeniJezik);
+		clanUciJezik.setId(kljucPK);
+
+		// Poziv servisa za čuvanje objekta ClanUciJezik
+		clanUciJezikService.saveClanUciJezik(clanUciJezik);
+
+		return "redirect:/clan/profilnaStranica";
+	}
+
+	@GetMapping("/ucenjeJezikaZaClana")
+	public String ucenjeJezikaZaClana(Model model, HttpSession session) {
+		String korisnickoIme = (String) session.getAttribute("korisnickoIme");
+		Korisnik korisnik = korisnikService.findKorisnik(korisnickoIme);
+		model.addAttribute("jezici", jezikService.getJezikeKorisnika(korisnik.getIdKorisnik()));
+		return "clanUcenje";
+	}
+
+	@PostMapping("/cuvanjeSesije")
+	public String ucenjeJezika(@RequestParam("odabraniJezik") int odabraniJezikID, HttpSession session) {
+		// Pronađi jezik na osnovu ID-ja
+		Jezik odabraniJezik = jezikService.findJezikById(odabraniJezikID);
+
+		// Čuvanje naziva i nivoa u sesiji
+		session.setAttribute("odabraniJezikNaziv", odabraniJezik.getNaziv());
+		session.setAttribute("odabraniJezikNivo", odabraniJezik.getNivo());
+
+		// Redirekcija na sledeću stranicu
+		return "clanNauceneNeNauceneReci";
+	}
+
+	@GetMapping("/ispisiNaucene")
+	public String ucenjeReci(Model model, HttpSession session) {
+		String korisnickoIme = (String) session.getAttribute("korisnickoIme");
+
+		String odabraniJezikNaziv = (String) session.getAttribute("odabraniJezikNaziv");
+		String odabraniJezikNivo = (String) session.getAttribute("odabraniJezikNivo");
+
+		Jezik jezik = jezikService.findByNazivAndNivo(odabraniJezikNaziv, odabraniJezikNivo);
+		Korisnik korisnik = korisnikService.findKorisnik(korisnickoIme);
+		model.addAttribute("jezici", jezikService.getJezikeKorisnika(korisnik.getIdKorisnik()));
+		return "clanNauceneReci";
+	}
+
+	@GetMapping("/ispisiNeNaucene")
+	public String ucenjeReciNeNaucene(Model model, HttpSession session) {
+		// String korisnickoIme = (String) session.getAttribute("korisnickoIme");
+
+		String odabraniJezikNaziv = (String) session.getAttribute("odabraniJezikNaziv");
+		String odabraniJezikNivo = (String) session.getAttribute("odabraniJezikNivo");
+
+		Jezik jezik = jezikService.findByNazivAndNivo(odabraniJezikNaziv, odabraniJezikNivo);
+		/*
+		 * Korisnik korisnik = korisnikService.findKorisnik(korisnickoIme); ne moze da
+		 * se implementira jer baza nije lepo odradila entities from tables
+		 */
+		model.addAttribute("neNauceneReci", recService.findAllByJezik(jezik));
+		return "clanNeNauceneReci";
+	}
+
+	@GetMapping("/pregledClanova")
+	public String pregledClanova(Model model, HttpSession session) {
+		model.addAttribute("clanovi", korisnikService.findAllClanovi());
+		return "clanPregledClanova";
+	}
+
+	@GetMapping("/pretraziClana")
+	public String pretraziClana(Model model, HttpSession session){	    
+		String korisnickoIme = (String) session.getAttribute("korisnickoIme");
+		
+		if (korisnickoIme != null) {
+			Korisnik korisnik = korisnikService.findKorisnik(korisnickoIme);
+
+			model.addAttribute("korisnickoIme", korisnik.getKorisnickoIme());
+			model.addAttribute("brPrijatelja", prijateljiService.brojPrijateljaZaKorisnika(korisnik.getIdKorisnik()));
+			model.addAttribute("ispisaniJeziciKojeUci", jezikService.getJezikeKorisnika(korisnik.getIdKorisnik()));
+			model.addAttribute("ispunjenihCiljeva", clanImaCiljService.getBrojClanImaCilj(korisnik.getIdKorisnik()));
+		}
+		
+		return "clanPregledClanova";
+	}
+	
+	
+	
+}

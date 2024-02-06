@@ -1,0 +1,68 @@
+package model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the cilj database table.
+ * 
+ */
+@Entity
+@NamedQuery(name="Cilj.findAll", query="SELECT c FROM Cilj c")
+public class Cilj implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int idCilj;
+
+	private String naziv;
+
+	//bi-directional many-to-one association to ClanImaCilj
+	@OneToMany(mappedBy="cilj")
+	private List<ClanImaCilj> clanImaCiljs;
+
+	public Cilj() {
+	}
+
+	public int getIdCilj() {
+		return this.idCilj;
+	}
+
+	public void setIdCilj(int idCilj) {
+		this.idCilj = idCilj;
+	}
+
+	public String getNaziv() {
+		return this.naziv;
+	}
+
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
+	}
+
+	public List<ClanImaCilj> getClanImaCiljs() {
+		return this.clanImaCiljs;
+	}
+
+	public void setClanImaCiljs(List<ClanImaCilj> clanImaCiljs) {
+		this.clanImaCiljs = clanImaCiljs;
+	}
+
+	public ClanImaCilj addClanImaCilj(ClanImaCilj clanImaCilj) {
+		getClanImaCiljs().add(clanImaCilj);
+		clanImaCilj.setCilj(this);
+
+		return clanImaCilj;
+	}
+
+	public ClanImaCilj removeClanImaCilj(ClanImaCilj clanImaCilj) {
+		getClanImaCiljs().remove(clanImaCilj);
+		clanImaCilj.setCilj(null);
+
+		return clanImaCilj;
+	}
+
+}

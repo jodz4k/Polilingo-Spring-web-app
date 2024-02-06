@@ -1,0 +1,69 @@
+package com.example.demo.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.demo.services.KorisnikService;
+
+import jakarta.servlet.http.HttpSession;
+import model.Korisnik;
+
+@Controller
+@RequestMapping(value="/korisnik")
+public class KorisnikController {
+	
+	@Autowired
+	KorisnikService kr;  
+	
+	
+	@PostMapping("/login")
+	public String saveKorisnik(){
+		
+		return "login";
+	}
+	@PostMapping("/saveKorisnik")
+	public String saveKorisnik(String korisnickoIme, String mail, String password){
+		/*
+		 * moze se ubaciti provera da li su isti passwordi
+		 */
+		
+		Korisnik k = new Korisnik();
+		k.setKorisnickoIme(korisnickoIme);
+		k.setMail(mail);
+		k.setPassword(password);
+		k.setTipKorisnika("clan");
+		
+		kr.saveKorisnik(k);
+		return "redirect:/index.jsp";
+	}
+	
+	/*
+	 * proverava da li se poklapa lozinka, pa onda nick, ako ni[ta ostaje na istoj stranici
+	 */
+	
+	@GetMapping("/login")
+	public String loginKorisnik(String korisnickoIme, String password, HttpSession session) {
+	    /*
+	     * ovde moze jos provera da se doda, za unos ili samo printanje poruka
+	     */
+		
+		System.out.println(kr.findKorisnik(korisnickoIme).getTipKorisnika());
+	    if(kr.findKorisnik(korisnickoIme).getPassword().equals(password)) {
+	        session.setAttribute("korisnickoIme", korisnickoIme);
+	        System.out.println(password);
+	        if(kr.findKorisnik(korisnickoIme).getTipKorisnika().equals("clan")){
+	        	System.out.println(1);
+	            return "redirect:/clan/profilnaStranica";  
+	        } else if (kr.findKorisnik(korisnickoIme).getTipKorisnika().equals("administrator")) {
+	        	System.out.println(2);
+	            return "administrator";
+	        }
+	    }
+	    System.out.println(3);
+	    return "login";
+	}
+
+}

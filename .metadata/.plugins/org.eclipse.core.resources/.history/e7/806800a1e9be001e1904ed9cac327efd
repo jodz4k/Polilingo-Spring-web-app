@@ -1,0 +1,17 @@
+package com.example.demo.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.repositories.RecRepository;
+
+@Service
+public class RecService {
+	
+	@Autowired
+	RecRepository rr;
+	
+	public void deleteRecByNaziv(String naziv) {
+		
+	}
+}

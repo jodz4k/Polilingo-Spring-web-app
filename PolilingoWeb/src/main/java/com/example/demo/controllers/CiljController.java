@@ -1,0 +1,45 @@
+package com.example.demo.controllers;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.demo.services.CiljService;
+
+import model.Cilj;
+
+@Controller
+@RequestMapping(value = "/cilj")
+public class CiljController {
+	
+	@Autowired
+	CiljService cs;
+	
+	@GetMapping("/ispisiCiljeve")
+	public String ispisiCiljeve(Model model) {
+		List<Cilj> ciljevi = cs.getCiljevi();
+		model.addAttribute("ciljevi", ciljevi);
+		return "admPregledCiljeva";
+	}
+	
+	@PostMapping("/saveCilj")
+	public String sacuvajCilj(String naziv) {
+		Cilj cilj = new Cilj();
+		cilj.setNaziv(naziv);
+		
+		cs.saveCilj(cilj);
+		
+		return "administrator";
+	}
+	
+	@PostMapping("/deleteCilj")
+	public String deleteCilj(String naziv) {
+		cs.deleteCilj(cs.findCiljByNaziv(naziv));
+		return "administrator";
+	}
+}

@@ -1,0 +1,115 @@
+package model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
+
+
+/**
+ * The persistent class for the clan_ima_cilj database table.
+ * 
+ */
+@Entity
+@Table(name="clan_ima_cilj")
+@NamedQuery(name="ClanImaCilj.findAll", query="SELECT c FROM ClanImaCilj c")
+public class ClanImaCilj implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
+	private ClanImaCiljPK id;
+
+	private byte jeIspunjen;
+
+	@Temporal(TemporalType.DATE)
+	private Date pocetak;
+
+	@Temporal(TemporalType.DATE)
+	private Date zavrsetak;
+
+	//bi-directional many-to-one association to Cilj
+	@ManyToOne
+	private Cilj cilj;
+
+	//bi-directional many-to-one association to Clan
+	@ManyToOne
+	private Clan clan;
+
+	//bi-directional many-to-one association to ClanImaCiljKojiPosedujeReci
+	@OneToMany(mappedBy="clanImaCilj")
+	private List<ClanImaCiljKojiPosedujeReci> clanImaCiljKojiPosedujeRecis;
+
+	public ClanImaCilj() {
+	}
+
+	public ClanImaCiljPK getId() {
+		return this.id;
+	}
+
+	public void setId(ClanImaCiljPK id) {
+		this.id = id;
+	}
+
+	public byte getJeIspunjen() {
+		return this.jeIspunjen;
+	}
+
+	public void setJeIspunjen(byte jeIspunjen) {
+		this.jeIspunjen = jeIspunjen;
+	}
+
+	public Date getPocetak() {
+		return this.pocetak;
+	}
+
+	public void setPocetak(Date pocetak) {
+		this.pocetak = pocetak;
+	}
+
+	public Date getZavrsetak() {
+		return this.zavrsetak;
+	}
+
+	public void setZavrsetak(Date zavrsetak) {
+		this.zavrsetak = zavrsetak;
+	}
+
+	public Cilj getCilj() {
+		return this.cilj;
+	}
+
+	public void setCilj(Cilj cilj) {
+		this.cilj = cilj;
+	}
+
+	public Clan getClan() {
+		return this.clan;
+	}
+
+	public void setClan(Clan clan) {
+		this.clan = clan;
+	}
+
+	public List<ClanImaCiljKojiPosedujeReci> getClanImaCiljKojiPosedujeRecis() {
+		return this.clanImaCiljKojiPosedujeRecis;
+	}
+
+	public void setClanImaCiljKojiPosedujeRecis(List<ClanImaCiljKojiPosedujeReci> clanImaCiljKojiPosedujeRecis) {
+		this.clanImaCiljKojiPosedujeRecis = clanImaCiljKojiPosedujeRecis;
+	}
+
+	public ClanImaCiljKojiPosedujeReci addClanImaCiljKojiPosedujeReci(ClanImaCiljKojiPosedujeReci clanImaCiljKojiPosedujeReci) {
+		getClanImaCiljKojiPosedujeRecis().add(clanImaCiljKojiPosedujeReci);
+		clanImaCiljKojiPosedujeReci.setClanImaCilj(this);
+
+		return clanImaCiljKojiPosedujeReci;
+	}
+
+	public ClanImaCiljKojiPosedujeReci removeClanImaCiljKojiPosedujeReci(ClanImaCiljKojiPosedujeReci clanImaCiljKojiPosedujeReci) {
+		getClanImaCiljKojiPosedujeRecis().remove(clanImaCiljKojiPosedujeReci);
+		clanImaCiljKojiPosedujeReci.setClanImaCilj(null);
+
+		return clanImaCiljKojiPosedujeReci;
+	}
+
+}

@@ -1,0 +1,14 @@
+package com.example.demo.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import model.Prijatelji;
+
+public interface PrijateljiRepository extends JpaRepository<Prijatelji, Integer> {
+
+//	@Query("SELECT COUNT(p.idPrijatelji) FROM Prijatelji p INNER JOIN p.clan c WHERE c.korisnik.idKorisnik = :idKorisnik")
+//	int brojPrijateljaZaKorisnika(@Param("idKorisnik") int idKorisnik);
+
+}

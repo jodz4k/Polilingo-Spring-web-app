@@ -1,0 +1,35 @@
+package com.example.demo.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.repositories.RecRepository;
+
+import model.Rec;
+
+@Service
+public class RecService {
+	
+	@Autowired
+	RecRepository rr;
+	
+	public Rec findRecByNaziv(String naziv) {
+        List<Rec> recs = rr.findByNaziv(naziv);
+        
+        if (recs.isEmpty()) {
+            return null; // No records found.
+        } else if (recs.size() == 1) {
+            return recs.get(0); // Return the single result.
+        } else {
+            // Optionally, handle the case when multiple records with the same name are found.
+            // For now, returning the first one. You may want to log this case or handle it differently.
+            return recs.get(0);
+        }
+    }
+	
+	public void deleteRec(Rec rec) {
+		rr.delete(rec);
+	}
+}
