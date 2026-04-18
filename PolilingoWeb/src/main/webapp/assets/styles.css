@@ -1,0 +1,260 @@
+﻿/* ============================================================
+   POLILINGO - Shared Stylesheet
+   Shared rules are at the top; page-specific overrides below.
+   ============================================================ */
+
+/* ----- Variables ----- */
+:root {
+    --green:        #4caf50;
+    --green-dark:   #45a049;
+    --green-darker: #34495e;
+    --green-hover:  #3e8e41;
+    --red-hover:    #c0392b;
+    --bg:           #f0f8f7;
+    --white:        #ffffff;
+    --border:       #ccc;
+    --border-table: #ddd;
+    --text-dark:    #333;
+    --shadow:       0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ----- Base layout (shared by all pages) ----- */
+body {
+    background-color: var(--bg);
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    color: var(--green);
+}
+
+/* ----- Form card ----- */
+form {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    width: 300px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-dark);
+    text-align: left;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* ----- Buttons ----- */
+button {
+    background-color: var(--green);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: var(--green-dark);
+}
+
+.button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--green);
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: var(--green-darker);
+}
+
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.add-word-button,
+.remove-words-button,
+.view-stats-button,
+.add-language-button {
+    background-color: var(--green);
+    color: white;
+}
+
+.action-button {
+    background-color: var(--green);
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+}
+
+.action-button:hover {
+    background-color: var(--green-dark);
+}
+
+.action-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+/* ----- Table ----- */
+.table {
+    width: 80%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    border: 1px solid var(--border-table);
+    padding: 8px;
+    text-align: left;
+}
+
+.table th {
+    background-color: var(--green);
+    color: white;
+}
+
+/* ----- Profile / card container ----- */
+.profile-container {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.info-section {
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* ----- Search bar ----- */
+.search-bar {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+#search-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#search-button {
+    background-color: var(--green);
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+}
+
+/* ----- Misc sections ----- */
+#countdown-section,
+#word-count-section {
+    margin-top: 20px;
+}
+
+
+/* ============================================================
+   PAGE-SPECIFIC OVERRIDES
+   Only rules that differ from the shared defaults above.
+   ============================================================ */
+
+/* Delete pages: button hover is red */
+body.page-admIzbrisiCilj button:hover,
+body.page-admIzbrisiJezik button:hover,
+body.page-admIzbrisiRec button:hover {
+    background-color: var(--red-hover);
+}
+
+/* clanPregledClanova: native table (not .table class) + wider profile */
+body.page-clanPregledClanova table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+body.page-clanPregledClanova th,
+body.page-clanPregledClanova td {
+    border: 1px solid var(--border-table);
+    padding: 8px;
+    text-align: left;
+}
+
+body.page-clanPregledClanova th {
+    background-color: var(--green);
+    color: white;
+}
+
+body.page-clanPregledClanova .profile-container {
+    width: 50%;
+}
+
+/* clan + clanPrikazClana: narrower profile */
+body.page-clan .profile-container,
+body.page-clanPrikazClana .profile-container {
+    width: 30%;
+}
+
+/* Profile pages: h1 spacing */
+body.page-clan h1,
+body.page-clanPregledClanova h1,
+body.page-clanPrikazClana h1 {
+    margin-bottom: 20px;
+}
+
+/* index.jsp: register button slightly darker */
+body.page-index .register-button {
+    background-color: var(--green-dark);
+}
+
+body.page-index .button:hover {
+    background-color: var(--green-hover);
+}

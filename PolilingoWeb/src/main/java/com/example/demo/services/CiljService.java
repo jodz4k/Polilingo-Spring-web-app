@@ -28,6 +28,12 @@ public class CiljService {
 	}
 
 	public Cilj findCiljByNaziv(String naziv) {
-		return cr.findByNaziv(naziv);
+		List<Cilj> sviCiljevi = cr.findAll();
+		for (Cilj cilj : sviCiljevi) {
+			if (cilj.getNaziv() != null && cilj.getNaziv().equals(naziv)) {
+				return cilj;
+			}
+		}
+		return null;
 	}
 }

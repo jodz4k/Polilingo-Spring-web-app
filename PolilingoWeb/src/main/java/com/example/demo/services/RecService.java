@@ -17,7 +17,13 @@ public class RecService {
 	RecRepository rr;
 	
 	public Rec findRecByNaziv(String naziv) {
-		return rr.findByNaziv(naziv);
+		List<Rec> sveReci = rr.findAll();
+		for (Rec rec : sveReci) {
+			if (rec.getNaziv() != null && rec.getNaziv().equals(naziv)) {
+				return rec;
+			}
+		}
+		return null;
 	}
 	
 	public void deleteRec(Rec rec) {

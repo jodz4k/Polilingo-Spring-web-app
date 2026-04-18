@@ -30,12 +30,23 @@ public class KorisnikService{
 	}
 	
 	public Korisnik findKorisnik(String korisnickoIme) {
-		Korisnik k = new Korisnik();
-		k = kr.findKorisnikbyKorisnickoIme(korisnickoIme);
-		return k;
+		List<Korisnik> korisnici = kr.findAll();
+		for (Korisnik korisnik : korisnici) {
+			if (korisnik.getKorisnickoIme() != null && korisnik.getKorisnickoIme().equals(korisnickoIme)) {
+				return korisnik;
+			}
+		}
+		return null;
 	}	
 	
 	public List<Korisnik> findAllClanovi(){
-		return kr.findAllClanovi();
+		List<Korisnik> korisnici = kr.findAll();
+		List<Korisnik> clanovi = new ArrayList<>();
+		for (Korisnik korisnik : korisnici) {
+			if (korisnik.getTipKorisnika() != null && korisnik.getTipKorisnika().equals("clan")) {
+				clanovi.add(korisnik);
+			}
+		}
+		return clanovi;
 	}
 }
