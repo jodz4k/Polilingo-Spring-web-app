@@ -7,11 +7,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrator</title>
+    <title>Ucenje Jezika</title>
     <link rel="stylesheet" href="/Polilingo/assets/styles.css">
 </head>
 <body class="page-clanUcenje">
-    <h1>Pregled jezika</h1>
+    <h1>Izaberite jezik</h1>
 
     <form action="/Polilingo/clan/cuvanjeSesije" method="post">
         <label for="odabraniJezik">Izaberite jezik:</label>

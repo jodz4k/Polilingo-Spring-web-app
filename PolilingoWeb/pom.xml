@@ -75,6 +75,11 @@
 			<artifactId>PolilingoJPA</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.20.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

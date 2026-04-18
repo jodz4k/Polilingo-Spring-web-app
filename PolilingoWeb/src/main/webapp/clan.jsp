@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Profilna Stranica</title>
+<title>Profil Clana</title>
 <link rel="stylesheet" href="/Polilingo/assets/styles.css">
 </head>
 <body class="page-clan">
@@ -39,14 +39,6 @@
 		<a href="/Polilingo/jezik/ispisiJezikeZaClanove"class="action-button">Pregled jezika</a>
 		<a href="/Polilingo/clan/ispisiCiljeve"class="action-button">Pregled ciljeva</a>
 		<a href="/Polilingo/clan/pregledClanova"class="action-button">Pregled clanova</a>	
-	</div>
-
-	<div id="countdown-section">
-		<!-- Countdown do isteka cilja -->
-	</div>
-
-	<div id="word-count-section">
-		<!-- Koliko je reÄŤi nauceno -->
 	</div>
 </body>
 </html>

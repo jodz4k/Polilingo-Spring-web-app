@@ -7,11 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Administrator</title>
+<title>Naucene Reci</title>
 <link rel="stylesheet" href="/Polilingo/assets/styles.css">
 </head>
 <body class="page-clanNauceneReci">
-	<h1>Pregled jezika</h1>
+	<h1>Naucene reci</h1>
 
 	<table class="table">
 		<thead>

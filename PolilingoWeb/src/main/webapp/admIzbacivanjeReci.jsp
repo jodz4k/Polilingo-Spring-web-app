@@ -3,8 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Izbacivanje Reci</title>
+<link rel="stylesheet" href="/Polilingo/assets/styles.css">
 </head>
 <body>
 
